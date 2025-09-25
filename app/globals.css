@@ -12,15 +12,89 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@theme {
+
+  /* FONTS */
+  --font-jost: "Jost", sans-serif;
+
+  /* FONT SIZE */
+  --radius-lg2: 0.625rem; 
+
+  /* COLORS */
+  /* === Primary === */
+  --color-primary-100: #d1d1d3;
+  --color-primary-200: #b3b3b6;
+  --color-primary-300: #8f8f92;
+  --color-primary-400: #6a6a6e;
+  --color-primary-500: #131118;
+  --color-primary-600: #0f0e15;
+  --color-primary-700: #0c0b11;
+  --color-primary-800: #08080d;
+  --color-primary-900: #040408;
+
+  /* === Secondary === */
+  --color-secondary-100: #eaf7d4;
+  --color-secondary-200: #d7f1a8;
+  --color-secondary-300: #c4eb7d;
+  --color-secondary-400: #b1e551;
+  --color-secondary-500: #9fdf26;
+  --color-secondary-600: #8cc622;
+  --color-secondary-700: #789e1e;
+  --color-secondary-800: #63761a;
+  --color-secondary-900: #4f4f15;
+
+  /* === Tertiary === */
+  --color-tertiary-100: #f6d8ea;
+  --color-tertiary-200: #f0a8cf;
+  --color-tertiary-300: #ea78b4;
+  --color-tertiary-400: #e44899;
+  --color-tertiary-500: #de187e;
+  --color-tertiary-600: #b81369;
+  --color-tertiary-700: #920f54;
+  --color-tertiary-800: #6c0b3f;
+  --color-tertiary-900: #46072a;
+
+  /* === Gray === */
+  --color-gray-100: #f7f7f7;
+  --color-gray-200: #efefef;
+  --color-gray-300: #d9d9d9;
+  --color-gray-400: #b3b3b3;
+  --color-gray-500: #8c8c8c;
+  --color-gray-600: #666666;
+  --color-gray-700: #4d4d4d;
+  --color-gray-800: #333333;
+  --color-gray-900: #1a1a1a;
+
+  /* === Light === */
+  --color-light-100: #f9f9f9;
+  --color-light-200: #f3f3f3;
+  --color-light-300: #ededed;
+  --color-light-400: #e7e7e7;
+  --color-light-500: #e1e1e1;
+
+  /* === White === */
+  --color-white-100: #ffffff;
+  --color-white-90: rgba(255, 255, 255, 0.9);
+  --color-white-80: rgba(255, 255, 255, 0.8);
+  --color-white-20: rgba(255, 255, 255, 0.2);
+  --color-white-10: rgba(255, 255, 255, 0.1);
+  --color-white-5: rgba(255, 255, 255, 0.05);
+
+  /* === Gradients === */
+  --gradient-1: linear-gradient(90deg, #34d399, #22d3ee);
+  --gradient-2: linear-gradient(90deg, #22d3ee, #6366f1);
+  --gradient-3: linear-gradient(90deg, #6366f1, #a855f7);
 }
