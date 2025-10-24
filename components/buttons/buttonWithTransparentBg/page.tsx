@@ -1,18 +1,22 @@
 interface ButtonProps {
-    Btntext: string;
-    onClick: ()=>void;
-    className?: string;
+  Btntext: string;
+  onClick: (e: React.MouseEvent) => void;
+  className?: string;
 }
 
-function ButtonWithTransparentBackground({ Btntext, onClick, className }: ButtonProps) {
-    return (
-        <button
-            className={`text-primary-500 text-sm cursor-pointer ${className ? className : ''}`}
-            onClick={onClick}
-        >
-            {Btntext}
-        </button>
-    );
+function ButtonWithTransparentBackground({
+  Btntext,
+  onClick,
+  className
+}: ButtonProps) {
+  return (
+    <button
+      className={`text-primary-500 cursor-pointer text-sm ${className ? className : ""}`}
+      onClick={(e) => onClick(e)}
+    >
+      {Btntext}
+    </button>
+  );
 }
 
 export default ButtonWithTransparentBackground;

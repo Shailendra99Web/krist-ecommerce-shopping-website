@@ -1,48 +1,66 @@
-import Button from "@/components/buttons/buttonWithBlackBg/page";
-import ButtonWithTransparentBackground from "@/components/buttons/buttonWithTransparentBg/page";
-import CheckButtonWithText from "@/components/checkButtonWithText/page";
+// Login / Signup page from template.
 import Header1 from "@/components/headers/h1/page";
 import Text1 from "@/components/texts/text1/page";
 
 interface TemplateAuthPageFormProps {
-    formName: string;
-    btnBackOnClick?: ()=> void;
-    inputFields: React.ReactNode;
-    heading: string;
-    subheading: string;
-    options: React.ReactNode;
-    btnText: string;
-    btnOnClick: () => void
+  onSubmit: (data: any) => void;
+  handleSubmit: any;
+  formName: string;
+  btnBackOnClick?: () => void;
+  inputFields: React.ReactNode;
+  heading: string;
+  subheading: string;
+  options: React.ReactNode;
+  btnText: string;
+  // btnOnClick: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-function TemplateAuthPageForm({ formName, btnBackOnClick, heading, subheading, inputFields, options, btnText, btnOnClick }: TemplateAuthPageFormProps) {
-    return (
-        <div className="w-full">
-            {(formName !== "formLogin" && formName !== "formSignup") ? <div className="flex gap-1 items-center mb-7.5 cursor-pointer" onClick={btnBackOnClick}>
-                <img src="/icons/arrow-left.svg" alt="left-arrow" />
-                <div className="text-primary-500">Back</div>
-            </div> : null}
-
-            {/* Heading */}
-            <div className="flex flex-col gap-y-1 mb-7.5">
-                <Header1 text={heading} />
-                <Text1 text={subheading} />
-            </div>
-
-            {/* Input Fields */}
-            <div className="flex flex-col gap-4 mb-4">
-                {inputFields}
-            </div>
-
-            {/* Options */}
-            <div className="flex items-center justify-between mb-7.5">
-                {options}
-            </div>
-
-            {/* CTA button */}
-            <Button Btntext={btnText} onClick={btnOnClick} />
+function TemplateAuthPageForm({
+  onSubmit,
+  handleSubmit,
+  formName,
+  btnBackOnClick,
+  heading,
+  subheading,
+  inputFields,
+  options,
+  btnText
+}: TemplateAuthPageFormProps) {
+  return (
+    <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+      {formName !== "formLogin" && formName !== "formSignup" ? (
+        <div
+          className="mb-7.5 flex w-max cursor-pointer items-center gap-1"
+          onClick={btnBackOnClick}
+        >
+          <img src="/icons/arrow-left.svg" alt="left-arrow" />
+          <div className="text-primary-500">Back</div>
         </div>
-    )
+      ) : null}
+
+      {/* Heading */}
+      <div className="mb-7.5 flex flex-col gap-y-1">
+        <Header1 text={heading} />
+        <Text1 text={subheading} />
+      </div>
+
+      {/* Input Fields */}
+      <div className="mb-4 flex flex-col gap-4">{inputFields}</div>
+
+      {/* Options */}
+      <div className="mb-7.5 flex items-center justify-between">{options}</div>
+
+      {/* <input type="submit" className="bg-pink-600 text-white" /> */}
+      <input
+        type={"submit"}
+        className="bg-primary-500 rounded-lg2 w-full cursor-pointer p-4 text-white"
+      />
+
+      {/* CTA button */}
+      {/* <Button type="submit" btntext={btnText}/> */}
+      {/* <Button type="submit" btntext={btnText} onClick={(event: React.MouseEvent<HTMLButtonElement>) => { event.preventDefault(); btnOnClick(event) }} /> */}
+    </form>
+  );
 }
 
 export default TemplateAuthPageForm;

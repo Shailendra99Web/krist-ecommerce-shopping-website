@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -19,6 +21,15 @@
   }
 } */
 
+/* New added classes, still like to be able to override with utility classes */
+@layer components {
+  .flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -26,12 +37,11 @@ body {
 }
 
 @theme {
-
   /* FONTS */
   --font-jost: "Jost", sans-serif;
 
   /* FONT SIZE */
-  --radius-lg2: 0.625rem; 
+  --radius-lg2: 0.625rem;
 
   /* COLORS */
   /* === Primary === */
@@ -67,8 +77,19 @@ body {
   --color-tertiary-800: #6c0b3f;
   --color-tertiary-900: #46072a;
 
+  --color-lightgray-100: #f3f2f5;
+  --color-lightgray-200: #e0dee4;
+  --color-lightgray-300: #ccc9d3;
+  --color-lightgray-400: #b8b5c2;
+  --color-lightgray-500: #a4a1aa;
+  --color-lightgray-600: #86838b;
+  --color-lightgray-700: #68656d;
+  --color-lightgray-800: #4a474e;
+  --color-lightgray-900: #2c292f;
+
   /* === Gray === */
-  --color-gray-100: #f7f7f7;
+  --color-gray-100: #f6f6f6;
+
   --color-gray-200: #efefef;
   --color-gray-300: #d9d9d9;
   --color-gray-400: #b3b3b3;
@@ -98,3 +119,19 @@ body {
   --gradient-2: linear-gradient(90deg, #22d3ee, #6366f1);
   --gradient-3: linear-gradient(90deg, #6366f1, #a855f7);
 }
+
+/* Chrome, Safari, Edge */
+.no-increase-decrease-arrows::-webkit-inner-spin-button,
+.no-increase-decrease-arrows::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.no-increase-decrease-arrows {
+  -moz-appearance: textfield;
+}
+
+/* * {
+  box-sizing: border-box;
+} */

@@ -1,11 +1,9 @@
 interface Header1Props {
-    text: string;
+  text: string;
 }
 
 function Header1({ text }: Header1Props) {
-    return (
-        <h1 className="font-bold text-3xl">{text}</h1>
-    )
+  return <h1 className="text-3xl font-bold">{text}</h1>;
 }
 
 export default Header1;
