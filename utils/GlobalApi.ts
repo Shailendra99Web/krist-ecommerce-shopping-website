@@ -1,4 +1,4 @@
-const backendUrlStartingPoint = `http://${process.env.NEXT_PUBLIC_BACKEND_URL}:7500/api`;
+const backendUrlStartingPoint = `https://${process.env.NEXT_PUBLIC_BACKEND_URL}/api`;
 interface apiFetchAllProductsProps {
   skip?: number;
   limit?: number;
