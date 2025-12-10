@@ -26,7 +26,7 @@ function OurServices() {
   ];
 
   return (
-    <section className="mx-[150px] my-[100px]">
+    <section className="max-w-primary mx-auto my-[100px]">
       <div className="flex items-center justify-between">
         {OurServicesData.map((item, index) => (
           <div key={index}>

@@ -5,9 +5,15 @@ interface CheckButtonWithTextProps {
   label: string;
   value: string;
   text: string;
+  className?: string;
 }
 
-function CheckButtonWithText({ label, value, text }: CheckButtonWithTextProps) {
+function CheckButtonWithText({
+  label,
+  value,
+  text,
+  className
+}: CheckButtonWithTextProps) {
   const [checked, setChecked] = useState<boolean>(false);
   const refInputCheckbox = useRef<HTMLInputElement | null>(null);
 
@@ -31,7 +37,7 @@ function CheckButtonWithText({ label, value, text }: CheckButtonWithTextProps) {
           onClick={() => refInputCheckbox.current?.click()}
         />
       </div>
-      <label htmlFor={label} className="cursor-pointer">
+      <label htmlFor={label} className={`cursor-pointer ${className}`}>
         {text}
       </label>
     </div>

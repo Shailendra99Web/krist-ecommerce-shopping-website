@@ -8,13 +8,13 @@ import CarouselCardLandscape from "./carouselCardLandscape";
 interface CarouselProps {
   title?: string;
   carouselItemsData: any;
-  carouselItemTemplateType?: string;
+  carouselItemTemplateType?: "portrait" | "landscape";
 }
 
 function Carousel({
   title = "Carousel Title",
   carouselItemsData,
-  carouselItemTemplateType = "categories"
+  carouselItemTemplateType = "portrait"
 }: CarouselProps) {
   if (!Array.isArray(carouselItemsData)) {
     return null;
@@ -27,7 +27,6 @@ function Carousel({
   useEffect(() => {
     const settingWindowsWidth = () => {
       const windowsWidth = window.innerWidth;
-      console.log(windowsWidth);
       setWindowWidth(windowsWidth);
     };
 
@@ -51,8 +50,11 @@ function Carousel({
             btnColorType="gray"
             onClick={() => {
               if (carouselItemsTotalShowing > 4) {
-                // setCarouselTranslateX((pre) => pre - (262 + 30)); // For Carousel Card Portrait
-                setCarouselTranslateX((pre) => pre - (360 + 30)); // For Carousel Card Landscape
+                if (carouselItemTemplateType == "portrait") {
+                  setCarouselTranslateX((pre) => pre - (262 + 30)); // For Carousel Card Portrait
+                } else {
+                  setCarouselTranslateX((pre) => pre - (360 + 30)); // For Carousel Card Landscape
+                }
                 setCarouselItemsTotalShowing((pre) => pre - 1);
               }
             }}
@@ -62,10 +64,12 @@ function Carousel({
           <ButtonWithBlackBg
             btnColorType="gray"
             onClick={() => {
-              console.log(carouselItemsTotalShowing);
               if (carouselItemsTotalShowing < carouselItemsData.length) {
-                // setCarouselTranslateX((pre) => pre + (262 + 30)); // For Carousel Card Portrait
-                setCarouselTranslateX((pre) => pre + (360 + 30)); // For Carousel Card Landscape
+                if (carouselItemTemplateType == "portrait") {
+                  setCarouselTranslateX((pre) => pre + (262 + 30)); // For Carousel Card Portrait
+                } else {
+                  setCarouselTranslateX((pre) => pre + (360 + 30)); // For Carousel Card Landscape
+                }
                 setCarouselItemsTotalShowing((pre) => pre + 1);
               }
             }}
@@ -74,6 +78,7 @@ function Carousel({
           />
         </div>
       </div>
+      
       {/* Carousel */}
       <div className="overflow-hidden">
         <div
@@ -83,7 +88,7 @@ function Carousel({
           {carouselItemsData.map(
             (item, index) =>
               // Carousel Item
-              carouselItemTemplateType != "testimonial" ? (
+              carouselItemTemplateType != "landscape" ? (
                 <CarouselCardPortrait key={index} index={index} item={item} />
               ) : (
                 <CarouselCardLandscape key={index} item={item} index={index} />

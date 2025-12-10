@@ -55,6 +55,28 @@ function TemplateAuthPageForm({
         type={"submit"}
         className="bg-primary-500 rounded-lg2 w-full cursor-pointer p-4 text-white"
       />
+      {formName === "formLogin" && (
+        <div className="mt-5 text-center text-sm text-gray-500">
+          {"Don't have an account? "}
+          <a
+            href="/auth/signup"
+            className="text-primary-500 underline hover:text-primary-600 transition-colors"
+          >
+            Sign up
+          </a>
+        </div>
+      )}
+      {formName === "formSignup" && (
+        <div className="mt-5 text-center text-sm text-gray-500">
+          {"Already have an account? "}
+          <a
+            href="/auth/login"
+            className="text-primary-500 underline hover:text-primary-600 transition-colors"
+          >
+            Log in
+          </a>
+        </div>
+      )}
 
       {/* CTA button */}
       {/* <Button type="submit" btntext={btnText}/> */}

@@ -1,10 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
-import Modal_OneButtonSlice from "./features/modal_OneButton/modal_OneButtonSlice";
+import ModalSlice from "./features/modals/modalsSlice";
+import categoriesSlice from "./features/categories/categoriesSlice";
+import allProductsReducer, {
+  reducerSetAllProductsWithExcludeItemsByCategoryString
+} from "./features/allProducts/allProductsSlice";
+import cartSlice from "./features/cart/cartSlice";
+import authSlice from "./features/auth/authSlice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      modal_OneButton: Modal_OneButtonSlice
+      modal: ModalSlice,
+      categories: categoriesSlice,
+      allProducts: allProductsReducer,
+      cart: cartSlice,
+      auth: authSlice
     }
   });
 };

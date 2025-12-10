@@ -23,7 +23,7 @@ function CheckBoxColorWithFoundItem({
       className="flex w-full items-center justify-between"
     >
       <div
-        className="flex gap-2"
+        className="flex cursor-pointer gap-2"
         onClick={() => {
           setIsChecked(!isChecked);
         }}

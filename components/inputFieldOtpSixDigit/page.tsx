@@ -13,7 +13,6 @@ function InputFieldOtpSixDigit({}: InputFieldOtpSixDigitProps) {
       `#digit-box-${inputElementNumber}`
     ) as HTMLInputElement;
     if (nextInput) {
-      console.log(nextInput);
       nextInput.focus();
     }
   }
@@ -22,7 +21,6 @@ function InputFieldOtpSixDigit({}: InputFieldOtpSixDigitProps) {
       `#digit-box-${inputElementNumber}`
     ) as HTMLInputElement;
     if (previousInput) {
-      console.log(previousInput);
       previousInput.focus();
     }
   }
@@ -30,7 +28,6 @@ function InputFieldOtpSixDigit({}: InputFieldOtpSixDigitProps) {
     event: React.KeyboardEvent<HTMLInputElement>,
     index: number
   ) {
-    console.log(event.key);
     if (event.key === "Backspace") {
       let newInputValues = inputValues.slice();
       newInputValues[index] = "";

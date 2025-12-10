@@ -1,5 +1,4 @@
 "use client";
-
 import TemplateAuthPage from "@/sections/templateAuthPage/page";
 import InputFieldWithTitle from "@/components/inputFieldWithTitle/page";
 import CheckButtonWithText from "@/components/checkButtonWithText/page";
@@ -11,6 +10,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schemas/authSchemas";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { apiLoginUser } from "@/utils/GlobalApi";
+import { loginReducer } from "@/redux/features/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { modal_OneButtonReducer } from "@/redux/features/modals/modalsSlice";
 
 type AllForms = "formLogin" | "formForgotPassword" | "formEnterOtp";
 
@@ -18,11 +22,12 @@ function LoginPage() {
   const [currentForm, setCurrentForm] = useState<AllForms>("formLogin"); // To set current visible form.
   const [coverImgClassName, setCoverImgClassName] = useState(""); // For animation.
   const [formClassName, setFormClassName] = useState(""); // For animation.
-
   // const [email, setEmail] = useState()
   // const [password, setPassword] = useState()
 
   type LoginForm = z.infer<typeof loginSchema>;
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const {
     register,
@@ -38,22 +43,46 @@ function LoginPage() {
     try {
       console.log(data);
       const { email, password } = data;
-
       const bodyData = {
         email,
         password
       };
-      const res = await fetch("http://localhost:7500/api/auth/login", {
-        body: JSON.stringify(bodyData),
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then((res: any) => res.json());
-      console.log("response data:", res);
+
+      const res = await apiLoginUser(bodyData);
+      console.log(res);
+
       if (res.success == true) {
         localStorage.setItem("krist-shopping-website-token", res.token);
-        alert(res.message);
+        dispatch(loginReducer({ isLoggedIn: true, firstName: res.data.firstName, lastName: res.data.lastName, email: res.data.email, addresses: res.data.addresses }));
+        console.log(res.message);
+        dispatch(
+          modal_OneButtonReducer({
+            isOpen: true,
+            heading: "Login Successfully",
+            infoText: "You logged in to your account successfully",
+            btn: {
+              text: "Go to Home",
+              url: "/"
+            }
+          })
+        );
+        setTimeout(() => {
+          router.push("/myprofile");
+          dispatch(
+            modal_OneButtonReducer({
+              isOpen: false,
+              heading: "Login Successfully",
+              infoText: "You logged in to your account successfully",
+              btn: {
+                text: "Go to Home",
+                url: "/"
+              }
+            })
+          );
+        }, 5000);
+      }
+      if (res.success == false) {
+        console.log(res.message);
       }
     } catch (err) {
       console.error("Something went wrong", err);
@@ -64,7 +93,8 @@ function LoginPage() {
   const forms = {
     // Below is Login form.
     formLogin: {
-      coverImgUrl: "/images/login-girl.png",
+      coverImgUrl:
+        "https://res.cloudinary.com/dfaklq64w/image/upload/v1762006272/login-girl_vswmx5.jpg",
       btnBackOnClick: undefined,
       heading: "Welcome 👋",
       subheading: "please login here",
@@ -115,7 +145,8 @@ function LoginPage() {
     },
     // Below is Forgot Password form.
     formForgotPassword: {
-      coverImgUrl: "/images/forgot-password-girl.png",
+      coverImgUrl:
+        "https://res.cloudinary.com/dfaklq64w/image/upload/v1762006544/forgot-password-girl_kcco8i.jpg",
       btnBackOnClick: () => changeForm("formLogin"),
       heading: "Forgot Password",
       subheading:
@@ -144,14 +175,14 @@ function LoginPage() {
     },
     // Below is Enter OTP (OTP Verfication) form.
     formEnterOtp: {
-      coverImgUrl: "/images/enter-otp-girl.png",
+      coverImgUrl:
+        "https://res.cloudinary.com/dfaklq64w/image/upload/v1762006542/enter-otp-girl_atw4qk.jpg",
       btnBackOnClick: () => changeForm("formForgotPassword"),
       heading: "Enter OTP",
       subheading:
         "We have share a code of your registered email address robertfox@example.com",
       inputFields: (
         <>
-          {/* OTP入力用のフィールドをここに追加することもできます */}
           <InputFieldOtpSixDigit />
         </>
       ),

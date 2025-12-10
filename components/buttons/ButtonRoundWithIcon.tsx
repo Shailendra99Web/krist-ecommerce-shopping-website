@@ -1,17 +1,22 @@
 interface ButtonRoundWithIconProps {
-    className?: string;
-    icon: any;
-  }
-  
-  function ButtonRoundWithIcon({className, icon }: ButtonRoundWithIconProps) {
-    return (
-      <button
-        className={`cursor-pointer hover:fill-primary-500 hover:bg-primary-500 rounded-full bg-white p-1.5 hover:text-white ${className}`}
-      >
-        {icon}
-      </button>
-    );
-  }
-  
-  export default ButtonRoundWithIcon;
-  
+  className?: string;
+  icon: any;
+  onClick?: () => void;
+}
+
+function ButtonRoundWithIcon({
+  className,
+  icon,
+  onClick
+}: ButtonRoundWithIconProps) {
+  return (
+    <button
+      className={`hover:fill-primary-500 hover:bg-primary-500 cursor-pointer rounded-full bg-white p-1.5 hover:text-white ${className}`}
+      onClick={onClick}
+    >
+      {icon}
+    </button>
+  );
+}
+
+export default ButtonRoundWithIcon;

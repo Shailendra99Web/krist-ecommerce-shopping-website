@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Button from "@/components/buttons/buttonWithBlackBg/page";
+import { useRouter } from "next/navigation";
 
 interface ModalOneButtonProps {
   isOpen: boolean;
@@ -8,8 +9,11 @@ interface ModalOneButtonProps {
   infoText: string;
   imgSrc?: string;
   imgAlt?: string;
-  btnText: string;
-  onButtonClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  btn: {
+    text: string;
+    url: string;
+  };
+  onButtonClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 function ModalOneButton({
@@ -18,11 +22,13 @@ function ModalOneButton({
   infoText,
   imgSrc = "",
   imgAlt = "",
-  btnText,
+  btn,
   onButtonClick
 }: ModalOneButtonProps) {
   const [display, setDisplay] = useState<boolean>(false);
   const [transition, setTransition] = useState<boolean>(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (isOpen) {
@@ -57,9 +63,10 @@ function ModalOneButton({
           <div className="">{infoText}</div>
         </div>
         <Button
-          btntext={btnText}
+          btntext={btn.text}
           onClick={(event: React.MouseEvent) =>
-            onButtonClick(event as React.MouseEvent<HTMLButtonElement>)
+            // onButtonClick(event as React.MouseEvent<HTMLButtonElement>)
+            router.push(btn.url)
           }
         ></Button>
       </div>

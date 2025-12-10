@@ -2,7 +2,7 @@ import ButtonWithBlackBg from "../buttons/buttonWithBlackBg/page";
 
 interface CarouselItem {
   bgColor: string;
-  label: string;
+  categoryName: string;
   imageUrl: string;
 }
 
@@ -17,10 +17,12 @@ function CarouselCardPortrait({ item, index }: CarouselCardPortraitProps) {
       key={index}
       className={`relative h-90 min-w-[262px] rounded-sm ${item.bgColor}`}
     >
+      <img src={item.imageUrl} alt="img" className="h-full min-w-[262px] object-cover" />
+
       <ButtonWithBlackBg
         className="absolute inset-x-[19px] bottom-2.5 !h-12.5 !w-56"
         btnColorType="gray"
-        btntext="Casual Wear"
+        btntext={item.categoryName}
       />
     </div>
   );

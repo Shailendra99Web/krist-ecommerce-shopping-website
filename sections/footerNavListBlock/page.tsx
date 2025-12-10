@@ -1,8 +1,12 @@
 import FooterItemsHeader from "@/components/headers/footerItemsHeader/page";
+import Link from "next/link";
 
 interface FooterNavListBlockProps {
   title: string;
-  navItems: string[];
+  navItems: {
+    title: string;
+    url: string;
+  }[];
 }
 
 function FooterNavListBlock({ title, navItems }: FooterNavListBlockProps) {
@@ -11,7 +15,9 @@ function FooterNavListBlock({ title, navItems }: FooterNavListBlockProps) {
       <FooterItemsHeader btnText={title} />
       <ul className="flex flex-col gap-3">
         {navItems.map((item, idx) => (
-          <li key={idx}>{item}</li>
+          <li key={idx}>
+            <Link href={item.url}>{item.title}</Link>
+          </li>
         ))}
       </ul>
     </div>

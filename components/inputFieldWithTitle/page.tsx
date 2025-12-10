@@ -7,6 +7,8 @@ interface InputFieldWithTitleProps {
   stateName: string;
   inputError: any;
   inputRequired: boolean;
+  className?: string;
+  disabled?: boolean;
 }
 
 function InputFieldWithTitle({
@@ -17,7 +19,9 @@ function InputFieldWithTitle({
   inputPlaceholder,
   stateName,
   inputError,
-  inputRequired
+  inputRequired,
+  className,
+  disabled = false
 }: InputFieldWithTitleProps) {
   return (
     <div className="relative flex flex-col gap-1">
@@ -30,9 +34,10 @@ function InputFieldWithTitle({
         name={htmlFor_Id_Name}
         id={htmlFor_Id_Name}
         placeholder={inputPlaceholder}
-        className="border-primary-500 rounded-lg2 border-1 p-4"
+        className={`border-primary-500 rounded-lg2 border-1 p-4 ${className}`}
+        disabled={disabled}
       ></input>
-      {inputError ? <p>{inputError}</p> : null}
+      {inputError ? <p className="text-error-500 text-xs">{inputError?.message}</p> : null}
     </div>
   );
 }

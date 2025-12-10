@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface LogoProps {
   src?: string;
 }
@@ -5,7 +7,9 @@ interface LogoProps {
 function Logo({ src = "/icons/logo.svg" }: LogoProps) {
   return (
     <div>
-      <img src={src} alt="logo" />
+      <Link href={"/"}>
+        <img src={src} alt="logo" />
+      </Link>
     </div>
   );
 }

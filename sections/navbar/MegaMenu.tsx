@@ -1,5 +1,5 @@
-import Header4 from "@/components/headers/Header4";
 import Header4Bold from "@/components/headers/Header4Bold";
+import Link from "next/link";
 
 function MegaMenu({ itemsData }: { itemsData: any }) {
   return (
@@ -16,7 +16,7 @@ function MegaMenu({ itemsData }: { itemsData: any }) {
                 <Header4Bold text={group.title}/>
                 <div className="flex flex-col gap-4">
                   {group.list.map((item: string, index: number) => (
-                    <div key={index}>{item}</div>
+                    <Link href={'/shop/allProducts'} key={index} className="cursor-pointer">{item}</Link>
                   ))}
                 </div>
               </div>

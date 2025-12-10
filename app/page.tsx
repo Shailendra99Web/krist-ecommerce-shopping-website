@@ -1,74 +1,68 @@
 "use client";
 
 import ButtonWithBlackBg from "@/components/buttons/buttonWithBlackBg/page";
+import ProductCard from "@/components/cards/CardProduct";
 import Carousel from "@/components/carousel/page";
-import FooterItemsHeader from "@/components/headers/footerItemsHeader/page";
-import LinkText from "@/components/linkText/page";
-import Logo from "@/components/logo/page";
-import Bestseller from "@/sections/bestseller/page";
-import FooterNavListBlock from "@/sections/footerNavListBlock/page";
-import MegaMenu from "@/sections/navbar/MegaMenu";
+import { useAppDispatch } from "@/redux/hooks";
+import DealOfTheMonthCountdown from "@/sections/dealsOfTheMonth/page";
+import Footer from "@/sections/footer/page";
 import Navbar from "@/sections/navbar/page";
 import OurServices from "@/sections/ourServices/page";
-import {
-  ArrowLeft,
-  ArrowRight,
-  ChevronDown,
-  CircleDollarSign,
-  CreditCard,
-  Facebook,
-  Headphones,
-  Heart,
-  Instagram,
-  Mail,
-  MapPin,
-  Package,
-  PhoneCall,
-  Search,
-  ShoppingBag,
-  Twitter
-} from "lucide-react";
-import React, { useState } from "react";
+import { apiFetchAllProducts } from "@/utils/GlobalApi";
+import { ArrowRight, Instagram } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 function Home() {
-  const [dealOfTheMonthCountdown, setDealOfTheMonthCountdown] = useState({
-    days: 120,
-    hours: 18,
-    minutes: 15,
-    seconds: 10
-  });
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const [allProducts, setAllProducts] = useState<any[]>([]); // All Products.
+  // const [totalPages, settotalPages] = useState(0); // Total Pages of Paginations.
+  // const [totalProductsViewingCounts, setTotalProductsViewingCounts] =
+  useState(0); // Total products in view.
+  // const [totalProductsCounts, setTotalProductsCounts] = useState(0); // Total products counts (including not viewable).
 
   const CarouselItemsCategories = [
     {
       bgColor: "bg-red-500",
-      label: "Dresses",
-      imageUrl: "/images/categories/dresses.png"
+      categoryName: "Casual Wear",
+      imageUrl:
+        "https://res.cloudinary.com/dfaklq64w/image/upload/v1763557481/cate1_e9lsg9.jpg"
     },
     {
       bgColor: "bg-yellow-500",
-      label: "Tops",
-      imageUrl: "/images/categories/tops.png"
+      categoryName: "Western Wear",
+      imageUrl:
+        "https://res.cloudinary.com/dfaklq64w/image/upload/v1763557477/cate2_hpfrbr.jpg"
     },
     {
       bgColor: "bg-purple-500",
-      label: "Jeans",
-      imageUrl: "/images/categories/jeans.png"
+      categoryName: "Ethnic Wear",
+      imageUrl:
+        "https://res.cloudinary.com/dfaklq64w/image/upload/v1763558607/cate3_d1k9gs.jpg"
     },
     {
       bgColor: "bg-black",
-      label: "Shoes",
-      imageUrl: "/images/categories/shoes.png"
-    },
-    {
-      bgColor: "bg-sky-500",
-      label: "Bags",
-      imageUrl: "/images/categories/bags.png"
-    },
-    {
-      bgColor: "bg-gray-500",
-      label: "Accessories",
-      imageUrl: "/images/categories/accessories.png"
+      categoryName: "Kids",
+      imageUrl:
+        "https://res.cloudinary.com/dfaklq64w/image/upload/v1763557477/cate4_rjbkgw.jpg"
     }
+    // {
+    //   bgColor: "bg-sky-500",
+    //   categoryName: "Bags",
+    //   imageUrl: "/images/categories/bags.png"
+    // },
+    // {
+    //   bgColor: "bg-gray-500",
+    //   categoryName: "Accessories",
+    //   imageUrl: "/images/categories/accessories.png"
+    // },
+    // {
+    //   bgColor: "bg-green-500",
+    //   categoryName: "Footwear",
+    //   imageUrl: "/images/categories/footwear.png"
+    // }
   ];
 
   const CarouselItemsTestimonials = [
@@ -114,6 +108,59 @@ function Home() {
     }
   ];
 
+  const instagramStoriesImages = [
+    "/images/cat1.jpg",
+    "/images/cat2.jpg",
+    "/images/cat3.jpg",
+    "https://res.cloudinary.com/dfaklq64w/image/upload/v1762006548/signup-boy_qsmwsj.jpg"
+  ];
+
+  async function fetchAllProducts(skip = 0, limit = 8) {
+    try {
+      const data = await apiFetchAllProducts({ skip: skip, limit: limit });
+      if (data) {
+        // setFetchedDataAllProducts(data);
+        if (data != undefined && data.totalCount > 6) {
+          // const calTotalPages = Math.ceil(data.totalCount / 6);
+          // settotalPages(calTotalPages); // Set total pages counts.
+          // setTotalProductsCounts(data.totalCount); // Set total products.
+          // setTotalProductsViewingCounts(data.count); // Set total viewing products.
+          setAllProducts([...data.data]); // Set all products.
+        }
+        return data;
+      }
+    } catch (error) {
+      console.log("Fetch error :", error);
+    }
+  }
+
+  // async function fetchUserCart() {
+  //   console.log("fetchUserCart..");
+  //   try {
+  //     const data = await apiFetchCart();
+  //     console.log("data", data);
+  //     dispatch(
+  //       addCart({
+  //         cartItems: data.data.cartItems,
+  //         totalAmount: data.totalAmount
+  //       })
+  //     );
+  //   } catch (error) {
+  //     console.log("Fetch error :", error);
+  //   }
+  // }
+
+  useEffect(() => {
+    let ignore = false;
+    (async () => {
+      fetchAllProducts();
+      // fetchUserCart();
+    })();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
   return (
     <div>
       {/* Navbar */}
@@ -123,7 +170,7 @@ function Home() {
       <main>
         <section className="relative m-2.5">
           <img
-            src="/images/homepage.png"
+            src="/images/homepage.jpg"
             alt="homepage_poster"
             className="mx-auto h-[885px]"
           />
@@ -133,184 +180,81 @@ function Home() {
             <div className="text-2xl">UPTO 40% OFF</div>
             <ButtonWithBlackBg
               btntext="Shop Now"
-              onClick={() => {}}
+              onClick={() => {
+                router.push("/shop/allProducts");
+              }}
               className="!w-[157px] gap-3"
               icon={<ArrowRight size={17} />}
             />
           </div>
         </section>
-        
+
         {/* Categories Section */}
-        <section className="mx-[150px] my-[100px]">
+        <section className="max-w-primary mx-auto my-[100px]">
           <Carousel
             title="Shop by Categories"
-            carouselItemTemplateType="categories"
+            carouselItemTemplateType="portrait"
             carouselItemsData={CarouselItemsCategories}
           />
         </section>
+
         {/* Our Bestseller */}
-        <div className="mx-[150px] my-[100px]">
-          <Bestseller />
+        <div className="max-w-primary mx-auto my-[100px]">
+          <section className="flex flex-wrap items-center justify-between">
+            <div className="title mx-auto mb-13 text-4xl">Our Bestsellers</div>
+            <div className="flex w-full flex-wrap items-center gap-7.5">
+              {/* Items */}
+              {allProducts.map((product, index) => (
+                <ProductCard key={index} product={product} />
+              ))}
+            </div>
+          </section>
         </div>
-        {/* Deals of the Months */}
-        <section className="flex-center gap-8.5">
-          <div className="flex w-138 flex-col gap-7">
-            <div className="month-deal-title text-4xl">Deals of the Month</div>
-            <div className="month-deal-description">
-              It is the long established fact that a reader will be distracted
-              by the readable content of a page when looking at its layout. The
-              point of using Lorem Ipsum is that is has a more-or-less normal
-              distribution of letters
-            </div>
-            <div className="month-deal-countdown flex gap-5">
-              <div className="flex-center h-21 w-21 flex-col rounded-xl border-2 border-gray-200">
-                <div className="text-3xl font-bold">
-                  {dealOfTheMonthCountdown.days}
-                </div>
-                <div className="text-xl">Days</div>
-              </div>
-              <div className="flex-center h-21 w-21 flex-col rounded-xl border-2 border-gray-200">
-                <div className="text-3xl font-bold">
-                  {dealOfTheMonthCountdown.hours}
-                </div>
-                <div className="text-xl">Hours</div>
-              </div>
-              <div className="flex-center h-21 w-21 flex-col rounded-xl border-2 border-gray-200">
-                <div className="text-3xl font-bold">
-                  {dealOfTheMonthCountdown.minutes}
-                </div>
-                <div className="text-xl">Mins</div>
-              </div>
-              <div className="flex-center h-21 w-21 flex-col rounded-xl border-2 border-gray-200">
-                <div className="text-3xl font-bold">
-                  {dealOfTheMonthCountdown.seconds}
-                </div>
-                <div className="text-xl">Secs</div>
-              </div>
-            </div>
-            <div className="month-deal-button">
-              <ButtonWithBlackBg
-                btntext="View All Products"
-                className="!w-49 gap-3"
-                icon={<ArrowRight size={17} />}
-              />
-            </div>
-          </div>
-          <img
-            src="/images/deal_of_the_month.jpg"
-            alt="deal_of_the_month"
-            className="h-125 w-138 rounded-sm object-cover object-top"
-          />
-        </section>
+
+        {/* Deals of the Month */}
+        <DealOfTheMonthCountdown />
+
         {/* What our Customer Say's */}
-        <section className="mx-[150px] my-[100px]">
-          <Carousel
-            title="What our Customer say's"
-            // carouselItems={CarouselItemsTestimonials}
-            carouselItemTemplateType="testimonial"
-            carouselItemsData={CarouselItemsTestimonials}
-          />
+        <section className="bg-gray-100">
+          <div className="max-w-primary mx-auto my-[100px] bg-gray-100 py-10">
+            <Carousel
+              title="What our Customer say's"
+              // carouselItems={CarouselItemsTestimonials}
+              carouselItemTemplateType="landscape"
+              carouselItemsData={CarouselItemsTestimonials}
+            />
+          </div>
         </section>
+
         {/* Our Instagram Stories */}
-        <section className="mx-[150px] my-[100px] flex flex-col gap-15.5">
+        <section className="max-w-primary mx-auto my-[100px] flex flex-col gap-15.5">
           <div className="mx-auto text-4xl">Our Instagram Stories</div>
           {/* gap-7 */}
           <div className="flex-center justify-between">
-            <img
-              src="/images/cat1.jpg"
-              alt=""
-              className="size-66 rounded-sm object-cover"
-            />
-            <img
-              src="/images/cat2.jpg"
-              alt=""
-              className="size-66 rounded-sm object-cover"
-            />
-            <img
-              src="/images/cat3.jpg"
-              alt=""
-              className="size-66 rounded-sm object-cover"
-            />
-            <img
-              src="/images/cat1.jpg"
-              alt=""
-              className="size-66 rounded-sm object-cover"
-            />
+            {instagramStoriesImages.map((imageSrc, i) => (
+              <Link key={i} href={""} className="group relative cursor-pointer">
+                <img
+                  key={imageSrc}
+                  src={imageSrc}
+                  alt=""
+                  className="size-66 rounded-sm object-cover"
+                />
+                <div className="invisible absolute inset-0 size-66 transition-all group-hover:visible group-hover:bg-black/30">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white p-3">
+                    <Instagram />
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
+
         {/* Our Services / Perks */}
-      <OurServices/>
+        <OurServices />
       </main>
 
       {/* Footer */}
-      <footer className="bg-primary-500 text-white">
-        <div className="mx-[150px] mt-[100px] flex flex-col items-center justify-center">
-          <div className="flex w-full items-center justify-between py-13.5">
-            <div className="w-65.5 space-y-10">
-              <Logo src={"/icons/logo-white.svg"} />
-              <div className="flex flex-col items-start gap-6">
-                <div className="flex-center gap-3">
-                  <PhoneCall className="size-6" />
-                  <div>(704) 555-0127</div>
-                </div>
-                <div className="flex-center gap-3">
-                  <Mail className="size-6" />
-                  <div>krist@example.com</div>
-                </div>
-                <div className="flex-center gap-3">
-                  <MapPin className="h-6 min-w-6" />
-                  <div>3891 Ranchview Dr.Richardson, California 62639</div>
-                </div>
-              </div>
-            </div>
-            <FooterNavListBlock
-              title={"Information"}
-              navItems={[
-                "My Account",
-                "Login",
-                "My Cart",
-                "My Wishlist",
-                "Chechout"
-              ]}
-            />
-            <FooterNavListBlock
-              title={"Service"}
-              navItems={[
-                "About Us",
-                "Careers",
-                "Delivery Information",
-                "Privary Policy",
-                "Terms & Conditions"
-              ]}
-            />
-            <div className="w-77">
-              <FooterItemsHeader btnText="Subscribe" />
-              <div>
-                Enter your email below to be the first to know about new
-                collections and product launches.
-              </div>
-              <button className="mt-5 flex w-full items-center justify-between rounded-xl border-2 border-white p-3.5">
-                <div className="flex items-center gap-2.5">
-                  <Mail className="size-6" />
-                  <div>Your Email</div>
-                </div>
-                <ArrowRight className="size-4" />
-              </button>
-            </div>
-          </div>
-
-          {/* Bottom copyright section*/}
-          <div className="flex w-full items-center justify-between border-t-1 border-gray-800 p-4.5">
-            <div></div>
-            <div>&copy; 2023 Krist. All rights reserved.</div>
-            <div className="flex gap-6.5">
-              <Facebook />
-              <Instagram />
-              <Twitter />
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

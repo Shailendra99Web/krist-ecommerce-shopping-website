@@ -9,23 +9,14 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signupSchema } from "@/schemas/authSchemas";
-
-// Zod Schemas
-// const signupSchema = z.object({
-//   firstName: z.string().min(3, 'First name must be at least 3 characters'),
-//   lastName: z.string().optional(),
-//   email: z.string().email('Please enter a valid email address'),
-//   password: z.string().min(5, 'Password must be at least 5 characters')
-// });
-
+import { apiSignup } from "@/utils/GlobalApi";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { loginReducer } from "@/redux/features/auth/authSlice";
+import { modal_OneButtonReducer } from "@/redux/features/modals/modalsSlice";
 type SignupForm = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
-  // const [firstName, setFirstName] = useState<string>('')
-  // const [lastName, setLastName] = useState<string>('')
-  // const [email, setEmail] = useState<string>('')
-  // const [password, setPassword] = useState<string>('')
-
   const {
     register,
     handleSubmit,
@@ -34,64 +25,69 @@ export default function SignupPage() {
     resolver: zodResolver(signupSchema) // ← ここでZodを統合
   });
 
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   async function onSubmit(data: SignupForm) {
     try {
       console.log("form data", data);
-
       const { firstName, lastName, email, password } = data;
-
       const bodyData = {
         firstName: firstName,
         lastName: lastName,
         email: email,
         password: password
       };
-      const res = await fetch("http://localhost:7500/api/auth/signup", {
-        method: "POST",
-        body: JSON.stringify(bodyData),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then((res: any) => res.json());
-      console.log("response data:", res);
+      const res = await apiSignup(bodyData);
+      console.log(res);
+
+      const { firstName2, lastName2, email2, addresses2 } = res.data;
+
       if (res.success == true) {
         localStorage.setItem("krist-shopping-website-token", res.token);
-        alert(res.message);
+        dispatch(
+          loginReducer({
+            isLoggedIn: true,
+            firstName: res.data.firstName,
+            lastName: res.data.lastName,
+            email: res.data.email,
+            addresses: res.data.addresses
+          })
+        );
+        console.log(res.message);
+        dispatch(
+          modal_OneButtonReducer({
+            isOpen: true,
+            heading: "Signup Successfully",
+            infoText: "Your account has been created successfully",
+            btn: { text: "Go to Home", url: "/" }
+          })
+        );
+        // setTimeout(() => {
+        //   router.push("/");
+        //   dispatch(
+        //     modal_OneButtonReducer({
+        //       isOpen: false,
+        //       heading: "Signup Successfully",
+        //       infoText: "Your account has been created successfully",
+        //       btn: { text: "Go to Home", url: "/" }
+        //     })
+        //   );
+        // }, 1500);
+      }
+      if (res.success == false) {
+        console.log(res.message);
       }
     } catch (err) {
       console.error("Something went wrong", err);
     }
   }
 
-  // async function formOnSubmit() {
-  //   try {
-  //     console.log('firstName:', firstName, 'lastName:', lastName, 'email:', email, 'password:', password)
-
-  //     const bodyData = {
-  //       firstName: firstName,
-  //       lastName: lastName,
-  //       email: email,
-  //       password: password
-  //     }
-  //     const res = await fetch('http://localhost:7500/api/auth/signup', {
-  //       method: 'POST',
-  //       body: JSON.stringify(bodyData),
-  //       headers: {
-  //         "Content-Type": "application/json"
-  //       }
-  //     }).then((res: any) => res.json())
-  //     console.log('response data:', res);
-  //   }
-  //   catch (err) {
-  //     console.error('Something went wrong', err);
-  //   }
-  // }
-
   return (
     <AuthPage
       formName="formSignup"
       coverImgClassName=""
-      coverImgUrl="/images/signup-boy.png"
+      coverImgUrl="https://res.cloudinary.com/dfaklq64w/image/upload/v1762006548/signup-boy_qsmwsj.jpg"
       form={
         <TemplateAuthPageForm
           onSubmit={onSubmit}
