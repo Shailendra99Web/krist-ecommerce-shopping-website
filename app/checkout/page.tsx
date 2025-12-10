@@ -1,17 +1,14 @@
 "use client";
 import ButtonWhiteWithBlackBorder from "@/components/buttons/ButtonWhiteWithBlackBorder";
 import ButtonWithBlackBg from "@/components/buttons/buttonWithBlackBg/page";
-import Header1 from "@/components/headers/h1/page";
 import Header4Bold from "@/components/headers/Header4Bold";
 import InputFieldWithTitleAndButton from "@/components/inputFieldWithTitleAndButton/page";
-import { addCart } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Footer from "@/sections/footer/page";
 import Navbar from "@/sections/navbar/page";
-import { apiFetchCart } from "@/utils/GlobalApi";
 import { Minus, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function CheckoutPage() {
   const [quantity, setQuantity] = useState<number>(1);
@@ -22,18 +19,18 @@ function CheckoutPage() {
 
   const dispatch = useAppDispatch();
 
-  async function fetchUserCart() {
-    try {
-      const data = await apiFetchCart();
-      dispatch(
-        addCart({
-          cartItems: data.data.cartItems,
-          totalAmount: data.totalAmount
-        })
-      );
-    } catch (error) {
-    }
-  }
+  // async function fetchUserCart() {
+  //   try {
+  //     const data = await apiFetchCart();
+  //     dispatch(
+  //       addCart({
+  //         cartItems: data.data.cartItems,
+  //         totalAmount: data.totalAmount
+  //       })
+  //     );
+  //   } catch (error) {
+  //   }
+  // }
 
   return (
     <div>

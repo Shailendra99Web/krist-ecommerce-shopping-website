@@ -4,13 +4,11 @@ import InputFieldWithTitle from "@/components/inputFieldWithTitle/page";
 import CheckButtonWithText from "@/components/checkButtonWithText/page";
 import LinkText from "@/components/linkText/page";
 import TemplateAuthPageForm from "@/sections/templateAuthPageForm/page";
-import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signupSchema } from "@/schemas/authSchemas";
 import { apiSignup } from "@/utils/GlobalApi";
-import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { loginReducer } from "@/redux/features/auth/authSlice";
 import { modal_OneButtonReducer } from "@/redux/features/modals/modalsSlice";
@@ -25,7 +23,6 @@ export default function SignupPage() {
     resolver: zodResolver(signupSchema) // ← ここでZodを統合
   });
 
-  const router = useRouter();
   const dispatch = useDispatch();
 
   async function onSubmit(data: SignupForm) {

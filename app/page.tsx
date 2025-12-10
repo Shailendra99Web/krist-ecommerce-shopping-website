@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 function Home() {
-  const dispatch = useAppDispatch();
   const router = useRouter();
   const [allProducts, setAllProducts] = useState<any[]>([]); // All Products.
   // const [totalPages, settotalPages] = useState(0); // Total Pages of Paginations.

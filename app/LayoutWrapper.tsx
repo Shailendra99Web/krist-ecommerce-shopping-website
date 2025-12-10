@@ -23,8 +23,6 @@ function LayoutWrapper({ children }: Props) {
   const modal_AddAddressIsOpen = useAppSelector(
     (state) => state.modal.modal_AddAddress.isOpen
   );
-
-  const dispatch = useAppDispatch();
   return (
     <>
       {children}
