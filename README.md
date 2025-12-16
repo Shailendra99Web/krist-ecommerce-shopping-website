@@ -45,7 +45,7 @@ Other Credits:
 
 I fully developed the backend for this project using the MERN stack. The backend manages authentication (JWT, sessions, cookies), shopping cart, orders, product APIs, and more.
 
-> **Note:** The backend source code is not included in this repository.
+> **Backend Source Code:** [View the backend repository here.](https://github.com/Shailendra99Web/krist-ecommerce-backend)
 
 ---
 

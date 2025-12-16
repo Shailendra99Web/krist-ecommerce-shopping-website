@@ -18,8 +18,7 @@ function Home() {
   const router = useRouter();
   const [allProducts, setAllProducts] = useState<any[]>([]); // All Products.
   // const [totalPages, settotalPages] = useState(0); // Total Pages of Paginations.
-  // const [totalProductsViewingCounts, setTotalProductsViewingCounts] =
-  useState(0); // Total products in view.
+  // const [totalProductsViewingCounts, setTotalProductsViewingCounts] = useState(0); // Total products in view.
   // const [totalProductsCounts, setTotalProductsCounts] = useState(0); // Total products counts (including not viewable).
 
   const CarouselItemsCategories = [
