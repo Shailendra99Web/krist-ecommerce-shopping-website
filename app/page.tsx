@@ -27,41 +27,30 @@ function Home() {
       bgColor: "bg-red-500",
       categoryName: "Casual Wear",
       imageUrl:
-        "https://res.cloudinary.com/dfaklq64w/image/upload/v1763557481/cate1_e9lsg9.jpg"
+        "https://res.cloudinary.com/dfaklq64w/image/upload/v1763557481/cate1_e9lsg9.jpg",
+      onClick: () => router.push("/shop/allProducts")
     },
     {
       bgColor: "bg-yellow-500",
       categoryName: "Western Wear",
       imageUrl:
-        "https://res.cloudinary.com/dfaklq64w/image/upload/v1763557477/cate2_hpfrbr.jpg"
+        "https://res.cloudinary.com/dfaklq64w/image/upload/v1763557477/cate2_hpfrbr.jpg",
+      onClick: () => router.push("/shop/allProducts")
     },
     {
       bgColor: "bg-purple-500",
       categoryName: "Ethnic Wear",
       imageUrl:
-        "https://res.cloudinary.com/dfaklq64w/image/upload/v1763558607/cate3_d1k9gs.jpg"
+        "https://res.cloudinary.com/dfaklq64w/image/upload/v1763558607/cate3_d1k9gs.jpg",
+      onClick: () => router.push("/shop/allProducts")
     },
     {
       bgColor: "bg-black",
       categoryName: "Kids",
       imageUrl:
-        "https://res.cloudinary.com/dfaklq64w/image/upload/v1763557477/cate4_rjbkgw.jpg"
+        "https://res.cloudinary.com/dfaklq64w/image/upload/v1763557477/cate4_rjbkgw.jpg",
+      onClick: () => router.push("/shop/allProducts")
     }
-    // {
-    //   bgColor: "bg-sky-500",
-    //   categoryName: "Bags",
-    //   imageUrl: "/images/categories/bags.png"
-    // },
-    // {
-    //   bgColor: "bg-gray-500",
-    //   categoryName: "Accessories",
-    //   imageUrl: "/images/categories/accessories.png"
-    // },
-    // {
-    //   bgColor: "bg-green-500",
-    //   categoryName: "Footwear",
-    //   imageUrl: "/images/categories/footwear.png"
-    // }
   ];
 
   const CarouselItemsTestimonials = [

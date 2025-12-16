@@ -44,7 +44,7 @@ function Carousel({
       {/* Categories Section */}
       <div className="mb-13 flex justify-between">
         <div className="text-4xl">{title}</div>
-        {/* Nav Buttons */}
+        {/* Top left and right nav buttons */}
         <div className="flex-center gap-5">
           <ButtonWithBlackBg
             btnColorType="gray"
